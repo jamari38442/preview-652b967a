@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Canine Intuition — Website Rebuild Pitch</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0e0e; --bg-card:#1c1c1c; --line:#2e2e2e; --ink:#f6f2ea; --ink-dim:#b7b1a6;
+    --accent:#f5941f; --accent-hi:#ffab3d; --cream:#faf6ef; --cream-ink:#191510; --cream-dim:#6e675c;
+    --good:#3ecf6a; --fair:#f5c518; --poor:#f5473d;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+
+  /* Cover */
+  .cover{padding:110px 0 90px;text-align:center;background:radial-gradient(circle at 50% 0%,#1c1305 0%,#0e0e0e 60%);}
+  .cover img{height:110px;margin:0 auto 28px;}
+  .cover .eyebrow{color:var(--accent);font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:13px;}
+  .cover h1{font-size:clamp(32px,5vw,52px);margin:14px 0 10px;}
+  .cover p{color:var(--ink-dim);font-size:18px;max-width:560px;margin:0 auto;}
+  .cover .year-pill{display:inline-block;margin-top:26px;padding:8px 18px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--ink-dim);}
+
+  section{padding:70px 0;}
+  h2.section-title{font-size:28px;margin-bottom:8px;}
+  .section-sub{color:var(--ink-dim);margin-bottom:40px;max-width:620px;}
+
+  /* overall score */
+  .overall-score{display:flex;align-items:center;gap:28px;background:var(--bg-card);border:1px solid var(--line);border-radius:16px;padding:32px;margin-bottom:40px;}
+  .score-ring{width:96px;height:96px;border-radius:50%;background:conic-gradient(var(--poor) 0deg, var(--poor) 0deg, #2a2a2a 0deg);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;}
+  .score-ring::after{content:"";position:absolute;inset:8px;background:var(--bg-card);border-radius:50%;}
+  .score-ring span{position:relative;z-index:1;font-size:26px;font-weight:800;}
+  .overall-score h3{margin:0 0 6px;font-size:20px;}
+  .overall-score p{margin:0;color:var(--ink-dim);font-size:14.5px;}
+
+  /* categories */
+  .cat{margin-bottom:22px;}
+  .cat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .cat-name{font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);}
+  .cat-badge{font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;}
+  .badge-poor{background:rgba(245,71,61,.15);color:var(--poor);}
+  .badge-fair{background:rgba(245,197,24,.15);color:var(--fair);}
+  .badge-good{background:rgba(62,207,106,.15);color:var(--good);}
+  .cat-track{height:8px;background:#262626;border-radius:999px;overflow:hidden;margin-bottom:10px;}
+  .cat-fill{height:100%;border-radius:999px;}
+  .fill-poor{background:var(--poor);}
+  .cat-desc{color:var(--ink-dim);font-size:14.5px;margin:0;}
+
+  /* critical issues */
+  .issues-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px;}
+  @media (max-width:700px){.issues-grid{grid-template-columns:1fr;}}
+  .issue-card{background:var(--bg-card);border:1px solid #3a2a10;border-left:3px solid var(--poor);border-radius:10px;padding:18px 20px;}
+  .issue-card b{display:block;font-size:14.5px;margin-bottom:4px;}
+  .issue-card span{font-size:13.5px;color:var(--ink-dim);}
+
+  /* scripts */
+  .script-card{background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:26px;margin-bottom:20px;}
+  .script-card h4{margin:0 0 12px;font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);}
+  .script-card p{font-size:15.5px;line-height:1.6;color:var(--ink);font-style:italic;}
+
+  /* design preview */
+  .browser-frame{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#111;box-shadow:0 30px 80px rgba(0,0,0,.5);}
+  .browser-chrome{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#1a1a1a;border-bottom:1px solid var(--line);}
+  .browser-dots{display:flex;gap:6px;}
+  .browser-dots span{width:11px;height:11px;border-radius:50%;background:#3a3a3a;}
+  .browser-url{flex:1;background:#0e0e0e;border-radius:8px;padding:7px 14px;font-size:12.5px;color:var(--ink-dim);text-align:center;}
+  iframe{width:100%;height:820px;border:none;display:block;background:#0e0e0e;}
+
+  .cta-final{text-align:center;background:linear-gradient(135deg,#1c1305,#100b02);border:1px solid #3a2a10;border-radius:16px;padding:50px 30px;}
+  .cta-final h2{font-size:26px;}
+  .cta-final p{color:var(--ink-dim);max-width:480px;margin:0 auto 26px;}
+  .btn{display:inline-flex;padding:14px 28px;border-radius:999px;background:var(--accent);color:#150d02;font-weight:800;text-decoration:none;}
+  .divider{height:1px;background:var(--line);}
+  footer{padding:40px 0;text-align:center;color:var(--ink-dim);font-size:13px;}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <img src="assets/logo.png" alt="Canine Intuition">
+  <div class="eyebrow">Website Rebuild Proposal</div>
+  <h1>Canine Intuition</h1>
+  <p>Your Website, Rebuilt for Growth</p>
+  <div class="year-pill">Prepared 2026 &middot; Presented by The Local Web Co.</div>
+</div>
+
+<div class="wrap">
+
+<section>
+  <h2 class="section-title">The Audit</h2>
+  <p class="section-sub">We reviewed canineintuition.com against 10 criteria that determine whether a website actually brings in business. Here's what we found.</p>
+
+  <div class="overall-score">
+    <div class="score-ring"><span>0/10</span></div>
+    <div>
+      <h3>Your website is currently down.</h3>
+      <p>canineintuition.com now shows a "Squarespace &mdash; Website Expired" error to every visitor. Every category below scores zero because there is no site left to evaluate &mdash; only an error page standing between your 5.0-star reputation and new customers.</p>
+    </div>
+  </div>
+
+  <div class="cat">
+    <div class="cat-head"><span class="cat-name">Mobile Responsiveness</span><span class="cat-badge badge-poor">0 / 10</span></div>
+    <div class="cat-track"><div class="cat-fill fill-poor" style="width:0%"></div></div>
+    <p class="cat-desc">The domain resolves to Squarespace's account-expired page, which offers nothing to a mobile visitor but a login prompt for the account owner.</p>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><span class="cat-name">Navigation</span><span class="cat-badge badge-poor">0 / 10</span></div>
+    <div class="cat-track"><div class="cat-fill fill-poor" style="width:0%"></div></div>
+    <p class="cat-desc">There is no navigation. There is no page. A visitor can't reach About, Services, or Contact because none of it loads anymore.</p>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><span class="cat-name">Page Speed</span><span class="cat-badge badge-poor">0 / 10</span></div>
+    <div class="cat-track"><div class="cat-fill fill-poor" style="width:0%"></div></div>
+    <p class="cat-desc">N/A &mdash; the page that loads isn't yours.</p>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><span class="cat-name">Clear CTA</span><span class="cat-badge badge-poor">0 / 10</span></div>
+    <div class="cat-track"><div class="cat-fill fill-poor" style="width:0%"></div></div>
+    <p class="cat-desc">No way to book, call, or inquire. The only button on the page logs the account owner into Squarespace billing.</p>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><span class="cat-name">Brand Consistency</span><span class="cat-badge badge-poor">0 / 10</span></div>
+    <div class="cat-track"><div class="cat-fill fill-poor" style="width:0%"></div></div>
+    <p class="cat-desc">Your logo, an excellent orange-on-black mark, doesn't appear anywhere. Visitors see generic Squarespace branding instead of yours.</p>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><span class="cat-name">Contact Accessibility</span><span class="cat-badge badge-poor">0 / 10</span></div>
+    <div class="cat-track"><div class="cat-fill fill-poor" style="width:0%"></div></div>
+    <p class="cat-desc">No phone number, no email, nothing. Visitors would need to already know your number to reach you at all.</p>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><span class="cat-name">Content Quality</span><span class="cat-badge badge-poor">0 / 10</span></div>
+    <div class="cat-track"><div class="cat-fill fill-poor" style="width:0%"></div></div>
+    <p class="cat-desc">The last archived version of your site still showed a footer copyright of "2020," meaning the content hadn't been touched in years even before the account lapsed.</p>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><span class="cat-name">Social / Icon Quality</span><span class="cat-badge badge-poor">0 / 10</span></div>
+    <div class="cat-track"><div class="cat-fill fill-poor" style="width:0%"></div></div>
+    <p class="cat-desc">The archived site listed Instagram as "coming soon." There's no active social presence linked anywhere.</p>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><span class="cat-name">Lead Capture</span><span class="cat-badge badge-poor">0 / 10</span></div>
+    <div class="cat-track"><div class="cat-fill fill-poor" style="width:0%"></div></div>
+    <p class="cat-desc">Zero. A dead domain can't capture a form submission, a newsletter signup, or a phone call.</p>
+  </div>
+  <div class="cat">
+    <div class="cat-head"><span class="cat-name">SEO / Blog Content</span><span class="cat-badge badge-poor">0 / 10</span></div>
+    <div class="cat-track"><div class="cat-fill fill-poor" style="width:0%"></div></div>
+    <p class="cat-desc">No blog, and the archived RSS feed confirms none was ever published. No content exists for Google to rank you on beyond your Business Profile.</p>
+  </div>
+
+  <div class="issues-grid">
+    <div class="issue-card"><b>Domain shows an error page</b><span>Every visitor to canineintuition.com currently sees "Squarespace &mdash; Website Expired" instead of your business.</span></div>
+    <div class="issue-card"><b>5.0★ Google reputation is being wasted</b><span>60 five-star Google reviews drive traffic to a link that goes nowhere. That's real trust with no place to land.</span></div>
+    <div class="issue-card"><b>No way to contact you online</b><span>Phone (336) 442-1234 and email k9intuition@gmail.com aren't listed anywhere a visitor can find them.</span></div>
+    <div class="issue-card"><b>Strong logo, zero usage</b><span>Your orange-on-black mark is distinctive and on-brand, but it isn't presented anywhere right now.</span></div>
+    <div class="issue-card"><b>No blog or SEO content</b><span>Competitors ranking for "dog training [city]" searches are capturing traffic you could be earning.</span></div>
+    <div class="issue-card"><b>Content hadn't been updated since 2020</b><span>Even before it expired, the last version of the site was five-plus years stale.</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <h2 class="section-title">The Outreach</h2>
+  <p class="section-sub">Ready-to-use scripts for reaching out, built around the single most damaging issue: the site being completely down.</p>
+
+  <div class="script-card">
+    <h4>Phone / Voicemail Script</h4>
+    <p>"Hi, this is [Your Name] with The Local Web Co. &mdash; I do quick, free website reviews for local businesses. I noticed Canine Intuition's website is actually down right now, it shows a Squarespace expired-account page to anyone who visits, even though you've got a 5-star rating with 60 reviews on Google. I put together a free redesign preview, no cost, no obligation. What's the best number or email to send it to?"</p>
+  </div>
+
+  <div class="script-card">
+    <h4>Text / SMS Pitch</h4>
+    <p>"Hi, this is [Your Name] with The Local Web Co. I noticed canineintuition.com is showing an expired-account error to visitors right now. I built a free redesign preview: [pitch link]. Mind if I send more details, or reply YES to take a look?"</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <h2 class="section-title">The Design</h2>
+  <p class="section-sub">A fully built, scrollable rebuild using your real logo, real photos, and real service descriptions. Scroll inside the frame below, or open it directly.</p>
+
+  <div class="browser-frame">
+    <div class="browser-chrome">
+      <div class="browser-dots"><span></span><span></span><span></span></div>
+      <div class="browser-url">canineintuition.com</div>
+    </div>
+    <iframe src="index.html" title="Canine Intuition rebuild preview"></iframe>
+  </div>
+  <p style="text-align:center;margin-top:16px;"><a href="index.html" style="color:var(--accent);font-weight:700;">Open the full design in a new tab &rarr;</a></p>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="cta-final">
+    <h2>What this does for the business</h2>
+    <p>A live site turns your 5.0-star reputation back into bookings: the blog and checklists earn organic search traffic, the free-consult page captures leads even when the phone doesn't ring, and the newsletter keeps past clients coming back.</p>
+    <a href="free-consult.html" class="btn">See the Lead-Gen Pages &rarr;</a>
+  </div>
+</section>
+
+</div>
+
+<footer>&copy; 2026 The Local Web Co. &middot; Prepared for Canine Intuition &middot; Not affiliated with Squarespace, Inc.</footer>
+
+</body>
+</html>
