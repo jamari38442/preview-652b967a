@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
+    // reveal in-view content as soon as the tab becomes visible (handles pages
+    // that load in a background tab, where rAF/timers are paused)
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) checkReveal(); });
     checkReveal();               // reveal whatever is already in view
     setTimeout(checkReveal, 400); // catch late layout/font shifts
     setTimeout(showAll, 2500);    // safety net: never leave anything hidden
