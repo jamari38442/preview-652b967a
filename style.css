@@ -331,6 +331,34 @@ nav.nav-open .hamburger span::after { transform: translateY(-7px) rotate(-45deg)
 .about-stats { display: flex; gap: 32px; margin-top: 28px; flex-wrap: wrap; }
 .about-stats div b { display: block; font-family: var(--display); font-size: 28px; color: var(--accent-dark); }
 .about-stats div span { font-size: 13.5px; color: var(--cream-dim); }
+.about-badges { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0 26px; }
+.about-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(245,148,31,.12); border: 1px solid rgba(245,148,31,.3);
+  color: var(--accent-dark); font-weight: 700; font-size: 14px;
+  padding: 8px 16px; border-radius: 999px;
+}
+.about-badge svg { width: 16px; height: 16px; stroke: var(--accent-dark); fill: none; stroke-width: 2.6; }
+
+/* Organizations / affiliations */
+.orgs { margin-top: 72px; }
+.orgs-head { max-width: 640px; margin-bottom: 32px; }
+.orgs-head h3 { font-family: var(--display); font-size: clamp(22px, 3vw, 30px); color: var(--cream-ink); }
+.orgs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 860px) { .orgs-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .orgs-grid { grid-template-columns: 1fr; } }
+.org-card {
+  background: #fff;
+  border: 1px solid var(--cream-line);
+  border-radius: var(--radius);
+  padding: 26px;
+}
+.org-card-wide { grid-column: span 3; }
+@media (max-width: 860px) { .org-card-wide { grid-column: span 2; } }
+@media (max-width: 560px) { .org-card-wide { grid-column: span 1; } }
+.org-card h4 { font-size: 17px; color: var(--cream-ink); margin-bottom: 8px; display: flex; align-items: center; gap: 9px; }
+.org-card h4::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: var(--accent); flex-shrink: 0; }
+.org-card p { font-size: 14.5px; color: var(--cream-dim); margin: 0; }
 
 /* Services — interactive split panel */
 .card-link { color: var(--accent-dark); font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
