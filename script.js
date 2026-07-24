@@ -24,26 +24,42 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Scroll-reveal animations
+  // Scroll-reveal animations (position-based so it works everywhere, with a
+  // safety timeout that guarantees content can never stay hidden)
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var revealEls = document.querySelectorAll('.reveal');
+  var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
   // stagger children inside reveal-group containers
   document.querySelectorAll('.reveal-group').forEach(function (group) {
-    var kids = group.querySelectorAll('.reveal');
-    kids.forEach(function (kid, i) { kid.style.transitionDelay = (i * 90) + 'ms'; });
+    group.querySelectorAll('.reveal').forEach(function (kid, i) {
+      kid.style.transitionDelay = (i * 90) + 'ms';
+    });
   });
-  if (reduceMotion || !('IntersectionObserver' in window)) {
-    revealEls.forEach(function (el) { el.classList.add('in'); });
+  var showAll = function () { reveals.forEach(function (el) { el.classList.add('in'); }); reveals = []; };
+  if (reduceMotion) {
+    showAll();
   } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          io.unobserve(entry.target);
+    var checkReveal = function () {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      for (var i = reveals.length - 1; i >= 0; i--) {
+        if (reveals[i].getBoundingClientRect().top < vh * 0.9) {
+          reveals[i].classList.add('in');
+          reveals.splice(i, 1);
         }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    revealEls.forEach(function (el) { io.observe(el); });
+      }
+      if (!reveals.length) {
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
+      }
+    };
+    var ticking = false;
+    var onScroll = function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; checkReveal(); }); }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    checkReveal();               // reveal whatever is already in view
+    setTimeout(checkReveal, 400); // catch late layout/font shifts
+    setTimeout(showAll, 2500);    // safety net: never leave anything hidden
   }
 
   // Generic form -> success state (pitch demo, no backend)
