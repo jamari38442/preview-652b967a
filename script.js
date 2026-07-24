@@ -24,30 +24,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Services split panel — swap detail on select
-  var svcRows = document.querySelectorAll('.svc-row');
-  var svcImg = document.getElementById('svcImg');
-  var svcTag = document.getElementById('svcTag');
-  var svcTitle = document.getElementById('svcTitle');
-  var svcDesc = document.getElementById('svcDesc');
-  if (svcRows.length && svcImg) {
-    svcRows.forEach(function (row) {
-      var activate = function () {
-        svcRows.forEach(function (r) { r.classList.remove('is-active'); });
-        row.classList.add('is-active');
-        svcImg.src = row.getAttribute('data-img');
-        svcImg.alt = row.getAttribute('data-title');
-        // restart fade animation
-        svcImg.style.animation = 'none';
-        void svcImg.offsetWidth;
-        svcImg.style.animation = '';
-        svcTag.textContent = row.getAttribute('data-tag');
-        svcTitle.innerHTML = row.getAttribute('data-title');
-        svcDesc.innerHTML = row.getAttribute('data-desc');
-      };
-      row.addEventListener('click', activate);
-      row.addEventListener('mouseenter', activate);
-    });
+  // Scroll-reveal animations
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('.reveal');
+  // stagger children inside reveal-group containers
+  document.querySelectorAll('.reveal-group').forEach(function (group) {
+    var kids = group.querySelectorAll('.reveal');
+    kids.forEach(function (kid, i) { kid.style.transitionDelay = (i * 90) + 'ms'; });
+  });
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    revealEls.forEach(function (el) { io.observe(el); });
   }
 
   // Generic form -> success state (pitch demo, no backend)
