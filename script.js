@@ -24,6 +24,32 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // Services split panel — swap detail on select
+  var svcRows = document.querySelectorAll('.svc-row');
+  var svcImg = document.getElementById('svcImg');
+  var svcTag = document.getElementById('svcTag');
+  var svcTitle = document.getElementById('svcTitle');
+  var svcDesc = document.getElementById('svcDesc');
+  if (svcRows.length && svcImg) {
+    svcRows.forEach(function (row) {
+      var activate = function () {
+        svcRows.forEach(function (r) { r.classList.remove('is-active'); });
+        row.classList.add('is-active');
+        svcImg.src = row.getAttribute('data-img');
+        svcImg.alt = row.getAttribute('data-title');
+        // restart fade animation
+        svcImg.style.animation = 'none';
+        void svcImg.offsetWidth;
+        svcImg.style.animation = '';
+        svcTag.textContent = row.getAttribute('data-tag');
+        svcTitle.innerHTML = row.getAttribute('data-title');
+        svcDesc.innerHTML = row.getAttribute('data-desc');
+      };
+      row.addEventListener('click', activate);
+      row.addEventListener('mouseenter', activate);
+    });
+  }
+
   // Generic form -> success state (pitch demo, no backend)
   document.querySelectorAll('form[data-demo-form]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
